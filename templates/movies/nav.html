@@ -1,0 +1,24 @@
+<div class="row container py-2">
+
+<nav class="nav col-md-6">
+    <a href="{% url 'movies:movies_main' %}" class="nav-link {% if movies_list %} active bg-light rounded-pill"
+        aria-current="page {% endif %} ">Movies' list</a>
+    <a href="{% url 'movies:vod' %}" class="nav-link {% if movies_vod %} active bg-light rounded-pill"
+        aria-current="page {% endif %} ">VOD</a>
+</nav>
+<nav class="nav col-md-6 justify-content-end">
+    <a href="{% url 'movies:import_update' %}" class="nav-link {% if import_update %} active bg-light rounded-pill"
+        aria-current="page {% endif %} ">Imports/Updates</a>
+    <a class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
+             data-bs-toggle="dropdown" aria-expanded="false">Configuration</a>
+          <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+            <li><a href="{% url 'movies:genres' %}" class="nav-link {% if genre %}
+                    active  bg-light" aria-current="page {% endif %} ">Genres</a></li>
+            <li><a href="{% url 'movies:credentials' %}" class="nav-link {% if credentials %}
+                    active  bg-light" aria-current="page {% endif %} ">Credentials</a></li>
+          </ul>
+    </a>
+</nav>
+</div>
+

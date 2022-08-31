@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Main{% endblock %}
+{% block content %}
+    {% include "movies/nav.html" %}
+
+    <div class="h1">Manage database</div>
+
+    <div class="d-flex align-items-center mt-3">
+        <button class="btn btn-outline-primary btn-lg rounded-pill">
+            <a href="{% url 'movies:update_vod' upload_url %}">Update</a></button>
+        <label class="ms-3 fs-5">Update VOD information from movie portal in all WTS movies</label>
+    </div>
+
+    <div class="d-flex align-items-center mt-3">
+        <button class="btn btn-outline-primary btn-lg rounded-pill">
+            <a href="{% url 'movies:upload_wts' upload_url %}">Upload</a></button>
+        <label class="ms-3 fs-5">
+            Upload WTS (want to see) movies from movie portal and update recommendation rate, actor rate</label>
+    </div>
+
+    <div class="d-flex align-items-center mt-3">
+        <button class="btn btn-outline-primary btn-lg rounded-pill">
+            <a href="{% url 'movies:update_recommendation' upload_url %}">Update</a></button>
+        <label class="ms-3 fs-5">Update recommendation rate, actor rate for all WTS movies</label>
+    </div>
+
+    <div class="d-flex align-items-center mt-3">
+        <button class="btn btn-outline-primary btn-lg rounded-pill">
+            <a href="{% url 'movies:upload_rated' upload_url %}">Upload</a></button>
+        <label class="ms-3 fs-5">!!! only once !!! Upload rated movies from movie portal</label>
+    </div>
+
+    {% if user.is_authenticated %}
+        <div class="d-flex align-items-center mt-3">
+            <button class="btn btn-outline-primary btn-lg rounded-pill">
+                <a href="{% url 'movies:temp_function' upload_url %}">Run</a></button>
+            <label class="ms-3 fs-5">Run temporary function</label>
+        </div>
+    {% endif %}
+
+{% endblock %}

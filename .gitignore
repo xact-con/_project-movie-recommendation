@@ -1,0 +1,16 @@
+/.idea/
+/venv/
+
+resources/
+pytest_cash/
+__pycache__/
+
+*.pyc
+*.pdf
+*.png
+*tmp*
+*temp*
+requirements_dev.txt
+.env
+db.sqlite3
+ToDo

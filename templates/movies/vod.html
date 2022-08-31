@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}VOD{% endblock %}
+{% block content %}
+{% include "movies/nav.html" %}
+
+    <div class="row">
+    {% for who in who_list %}
+        <div class="container col-md-3">
+            <div class="h1 text-center w-50">{{ who }}</div>
+
+            {% for vod in vod_services %}
+                <div><button class="my-1 w-50 btn btn-sm btn-outline-primary bg-white rounded-pill">
+                    <a href="{% url 'movies:vod_list' who vod|slugify %}">{{ vod }}</a></button></div>
+            {% endfor %}
+        </div>
+        <div class="container col-md-1"></div>
+    {% endfor %}
+    </div>
+
+{% endblock %}

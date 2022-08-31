@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% load bootstrap5 %}
+{% load crispy_forms_tags %}
+{% load custom_tags %}
+{% load humanize %}
+
+{% block title %}Movies' list{% endblock %}
+{% block content %}
+{% include "movies/nav.html" %}
+
+<div class="h1"> {{ movie.title }}</div>
+
+<div class="row">
+    <div class="col-md-10">
+        <div><a href="{{ movie.link }}">{{ movie.movie_id }}</a></div>
+        <div>Director: {{ movie.director }}</div>
+        <div>Genres: {{ movie.genres.all|get_flat_values_queryset:'genre,, ' }}</div>
+        <div>Production: {{ movie.countries.all|get_flat_values_queryset:'country,, ' }}</div>
+        {% if movie.vods.all|length > 0 %}
+            <div>VODs: {{ movie.vods.first.vod_list_comma }}</div>
+        {% endif %}
+    </div>
+    <div class="col-md-2 text-center">
+        {% if not movie.my_rates.rate %}
+            <form method="POST">
+                {% csrf_token %}
+                <div> {{ form.my_rate.label }} </div>
+                <div> {{ form.my_rate }} </div>
+                <div class="my-1">
+                    <button class="btn btn-outline-primary btn-sm rounded-pill" type="submit">Save</button></div>
+            </form>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+    <table class="table table-hover table-sm table-responsive text-start">
+        <thead>
+            <tr>
+                <th>&nbsp</th>
+                <th>&nbsp</th>
+            </tr>
+        </thead>
+
+        <tbody class="container overflow-auto">
+            {% if movie.wtss.rate %}
+                <tr>
+                    <td>Want to see</td>
+                    <td class="text-center">{{ movie.wtss.rate }}</td>
+                </tr>
+                <tr>
+                    <td>Recommendation rate</td>
+                    <td class="text-center">{{ movie.wtss.rate_recommended|floatformat:1 }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td>My rate</td>
+                    <td class="text-center">{{ movie.my_rates.rate }}</td>
+{#                    <td class="text-center">{{ movie.user_rate }}</td>#}
+                </tr>
+            {% endif %}
+            <tr>
+                <td>Rate</td>
+                <td class="text-center">{{ movie.rate|floatformat:1 }}</td>
+            </tr>
+            <tr>
+                <td>Rate count</td>
+                <td class="text-center">{{ movie.rate_count|intcomma }}</td>
+            </tr>
+            {% if movie.critic_rate %}
+                <tr>
+                    <td>Critic rate</td>
+                    <td class="text-center">{{ movie.critic_rate }}</td>
+                </tr>
+            {% endif %}
+            <tr>
+                <td>Year</td>
+                <td class="text-center">{{ movie.year }}</td>
+            </tr>
+            {% if movie.box_office %}
+                <tr>
+                    <td>Box office</td>
+                    <td class="text-center">{{ movie.box_office }}</td>
+                </tr>
+            {% endif %}
+            {% if movie.box_office_usa %}
+            <tr>
+                <td>Box office (USA)</td>
+                <td class="text-center">{{ movie.box_office_usa }}</td>
+            </tr>
+            {% endif %}
+            {% if movie.box_office_outside_usa %}
+            <tr>
+                <td>Box office (outside USA)</td>
+                <td class="text-center">{{ movie.box_office_outside_usa }}</td>
+            </tr>
+            {% endif %}
+            {% if movie.award_oscar %}
+            <tr>
+                <td>Oscars</td>
+                <td class="text-center">{{ movie.award_oscar }}</td>
+            </tr>
+            {% endif %}
+            {% if movie.award %}
+            <tr>
+                <td>Awards</td>
+                <td class="text-center">{{ movie.award }}</td>
+            </tr>
+            {% endif %}
+            {% if movie.nomination %}
+            <tr>
+                <td>Nominations</td>
+                <td class="text-center">{{ movie.nomination }}</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    </div>
+
+    <div class="col-md-1"></div>
+
+    <div class="col-md-6">
+        <table class="container table col-md-4 table-hover table-sm table-responsive text-center">
+        <thead>
+            <tr>
+                <th class="text-start">Actor</th>
+                <th>Rate</th>
+                <th>Rate count</th>
+                <th>My rate</th>
+                <th>TOP #</th>
+            </tr>
+        </thead>
+
+        <tbody class="container overflow-auto">
+            {% for role in movie.roles.all|order_by:'-rate' %}
+            <tr>
+                <td class="text-start"><a href="{{ role.actor.link }}">{{ role.actor }}</a></td>
+                <td>{{ role.rate }}</td>
+                <td>{{ role.rate_count|intcomma }}</td>
+                <td>{{ role.user_rate|floatformat:"0" }}</td>
+                <td>{{ role.top|floatformat:"0" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

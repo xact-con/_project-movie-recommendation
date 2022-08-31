@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load bootstrap5 %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}Add genre like{% endblock %}
+{% block content %}
+{% include "movies/nav.html" %}
+
+    <div class="h1">Add like to genre</div>
+    <div class="mb-1">Assess in 1-5 scale how much do you like a genre.
+        It would have influence on recommendation engine</div>
+
+    {% crispy form helper %}
+
+{% endblock %}
